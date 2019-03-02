@@ -18,12 +18,81 @@ It is designed:
 
 
 ## <a name="pkg-index">Index</a>
+* [type Routes](#Routes)
+  * [func New() *Routes](#New)
+  * [func (r *Routes) Add(pattern string, f fasthttp.RequestHandler)](#Routes.Add)
+  * [func (r Routes) Route(ctx *fasthttp.RequestCtx)](#Routes.Route)
 
 
 #### <a name="pkg-files">Package files</a>
-[doc.go](/src/github.com/jspc/routes/doc.go) 
+[doc.go](/src/github.com/jspc/routes/doc.go) [routes.go](/src/github.com/jspc/routes/routes.go) 
 
 
+
+
+
+
+## <a name="Routes">type</a> [Routes](/src/target/routes.go?s=183:282#L2)
+``` go
+type Routes struct {
+    Routes  map[string]fasthttp.RequestHandler
+    Catcher fasthttp.RequestHandler
+}
+```
+Routes represents the fasthttp aware routes
+and configuration that determine which route to choose
+
+
+
+
+
+
+
+### <a name="New">func</a> [New](/src/target/routes.go?s=405:423#L9)
+``` go
+func New() *Routes
+```
+New is a friendly, convenience function for returning
+an instance of routes.Routes that can be used in client code
+
+
+
+
+
+### <a name="Routes.Add">func</a> (\*Routes) [Add](/src/target/routes.go?s=1085:1148#L31)
+``` go
+func (r *Routes) Add(pattern string, f fasthttp.RequestHandler)
+```
+Add takes a pattern, a function, and adds them to its self
+so requests can be routed correctly.
+
+A pattern can be a full url, or can use parameters.
+Params in URLs look like:
+
+
+	/users/:user/address
+
+This would match on:
+
+
+	/users/12345/address
+
+(For instance)
+
+Add() does no checking for existing routes; it is the responsibility
+of the developer to ensure there are no duplicates. The last function
+assigned to a patter will be used.
+
+
+
+
+### <a name="Routes.Route">func</a> (Routes) [Route](/src/target/routes.go?s=1367:1414#L38)
+``` go
+func (r Routes) Route(ctx *fasthttp.RequestCtx)
+```
+Route will send a fasthttp request to the correct function based
+on the path in the request.
+Parameters, as defined in a route, are accessed by ctx.userValue(param)
 
 
 
