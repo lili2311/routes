@@ -1,2 +1,5 @@
 [![GoDoc](https://godoc.org/github.com/jspc/routes?status.svg)](https://godoc.org/github.com/jspc/routes)
 [![Go Report Card](https://goreportcard.com/badge/github.com/jspc/routes)](https://goreportcard.com/report/github.com/jspc/routes)
+[![CircleCI](https://circleci.com/gh/jspc/routes/tree/master.svg?style=svg)](https://circleci.com/gh/jspc/routes/tree/master)
+[![Codecov](https://codecov.io/gh/jspc/routes/branch/master/graphs/badge.svg?branch=master)](https://codecov.io/gh/jspc/routes/branch/master)
+![Code Climate maintainability](https://img.shields.io/codeclimate/maintainability/jspc/routes.svg)
