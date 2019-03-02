@@ -76,7 +76,7 @@ func keys(m map[string]fasthttp.RequestHandler) (s []string) {
 	s = make([]string, len(m))
 
 	i := 0
-	for k, _ := range m {
+	for k := range m {
 		s[i] = k
 		i++
 	}
