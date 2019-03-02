@@ -48,3 +48,38 @@ func TestRoutes_Route(t *testing.T) {
 		})
 	}
 }
+
+func TestRoutes_Add(t *testing.T) {
+	for _, test := range []struct {
+		name   string
+		input  string
+		expect string
+	}{
+		{"Empty string", "", "/"},
+		{"Missing starting slash", "something/", "/something/"},
+		{"Missing ending slash", "/something", "/something/"},
+		{"Missing starting _and_ ending slashes", "something", "/something/"},
+	} {
+		t.Run(test.name, func(t *testing.T) {
+			r := New()
+			r.Add(test.input, func(*fasthttp.RequestCtx) {})
+
+			received := keys(r.Routes)[0]
+			if test.expect != received {
+				t.Errorf("expected %q, received %q", test.expect, received)
+			}
+		})
+	}
+}
+
+func keys(m map[string]fasthttp.RequestHandler) (s []string) {
+	s = make([]string, len(m))
+
+	i := 0
+	for k, _ := range m {
+		s[i] = k
+		i++
+	}
+
+	return
+}
