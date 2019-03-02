@@ -7,7 +7,7 @@ import (
 	"github.com/valyala/fasthttp"
 )
 
-func ExampleAdd_Simple() {
+func ExampleRoutes_Add_simple() {
 	r := routes.New()
 	r.Add("/", func(ctx *fasthttp.RequestCtx) {
 		fmt.Println("root")
@@ -28,7 +28,7 @@ func ExampleAdd_Simple() {
 	// Output: root
 }
 
-func ExampleAdd_Missing() {
+func ExampleRoutes_Add_missing() {
 	r := routes.New()
 	r.Add("/", func(ctx *fasthttp.RequestCtx) {
 		fmt.Println("root")
@@ -53,7 +53,7 @@ func ExampleAdd_Missing() {
 	// Output: 404
 }
 
-func ExampleAdd_Params() {
+func ExampleRoutes_Add_params() {
 	r := routes.New()
 	r.Add("/hello/:name", func(ctx *fasthttp.RequestCtx) {
 		name := ctx.UserValue("name")

@@ -5,6 +5,7 @@
 
 * [Overview](#pkg-overview)
 * [Index](#pkg-index)
+* [Examples](#pkg-examples)
 
 ## <a name="pkg-overview">Overview</a>
 package routes is a small, no-frills routing library for fasthttp. It's designed to sit within a fasthttp
@@ -23,6 +24,10 @@ It is designed:
   * [func (r *Routes) Add(pattern string, f fasthttp.RequestHandler)](#Routes.Add)
   * [func (r Routes) Route(ctx *fasthttp.RequestCtx)](#Routes.Route)
 
+#### <a name="pkg-examples">Examples</a>
+* [Routes.Add (Missing)](#example_Routes_Add_missing)
+* [Routes.Add (Params)](#example_Routes_Add_params)
+* [Routes.Add (Simple)](#example_Routes_Add_simple)
 
 #### <a name="pkg-files">Package files</a>
 [doc.go](/src/github.com/jspc/routes/doc.go) [routes.go](/src/github.com/jspc/routes/routes.go) 
