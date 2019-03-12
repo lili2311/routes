@@ -24,6 +24,47 @@ It is designed:
 2. To be as unobtrusive as possible
 
 
+    package main
+
+    import (
+       "fmt"
+
+       "github.com/jspc/routes"
+       "github.com/valyala/fasthttp"
+    )
+
+    type API struct {
+       Message string
+    }
+
+    func (a API) Hello(ctx *fasthttp.RequestCtx) {
+       name := ctx.UserValue("name").(string)
+
+       fmt.Fprintf(ctx, "%s %s", a.Message, name)
+    }
+
+    func (a API) FourOhFour(ctx *fasthttp.RequestCtx) {
+       ctx.SetStatusCode(fasthttp.StatusNotFound)
+
+       fmt.Fprintf(ctx, "%s not found", string(ctx.Path()))
+    }
+
+    func (a API) Handle(ctx *fasthttp.RequestCtx) {
+       r := routes.New()
+       r.Catcher = a.FourOhFour
+
+       r.Add("/hello/:name", a.Hello)
+
+       r.Route(ctx)
+    }
+
+    func main() {
+       panic(fasthttp.ListenAndServe(":8080", API{"Hello"}.Handle))
+    }
+
+The above will return `Hello james` for GET /hello/james, and a 404 for anything else.
+
+
 
 
 ## <a name="pkg-index">Index</a>
@@ -38,19 +79,20 @@ It is designed:
 * [Routes.Add (Simple)](#example_Routes_Add_simple)
 
 #### <a name="pkg-files">Package files</a>
-[doc.go](/src/github.com/jspc/routes/doc.go) [routes.go](/src/github.com/jspc/routes/routes.go) 
+[doc.go](/src/target/doc.go) [routes.go](/src/target/routes.go)
 
 
 
 
 
 
-## <a name="Routes">type</a> [Routes](/src/target/routes.go?s=183:282#L2)
+## <a name="Routes">type</a> [Routes](/src/target/routes.go?s=183:282#L12)
 ``` go
 type Routes struct {
     Routes  map[string]fasthttp.RequestHandler
     Catcher fasthttp.RequestHandler
 }
+
 ```
 Routes represents the fasthttp aware routes
 and configuration that determine which route to choose
@@ -61,7 +103,7 @@ and configuration that determine which route to choose
 
 
 
-### <a name="New">func</a> [New](/src/target/routes.go?s=405:423#L9)
+### <a name="New">func</a> [New](/src/target/routes.go?s=405:423#L19)
 ``` go
 func New() *Routes
 ```
@@ -72,7 +114,7 @@ an instance of routes.Routes that can be used in client code
 
 
 
-### <a name="Routes.Add">func</a> (\*Routes) [Add](/src/target/routes.go?s=1085:1148#L31)
+### <a name="Routes.Add">func</a> (\*Routes) [Add](/src/target/routes.go?s=1085:1148#L41)
 ``` go
 func (r *Routes) Add(pattern string, f fasthttp.RequestHandler)
 ```
@@ -83,12 +125,12 @@ A pattern can be a full url, or can use parameters.
 Params in URLs look like:
 
 
-	/users/:user/address
+    /users/:user/address
 
 This would match on:
 
 
-	/users/12345/address
+    /users/12345/address
 
 (For instance)
 
@@ -99,7 +141,7 @@ assigned to a patter will be used.
 
 
 
-### <a name="Routes.Route">func</a> (Routes) [Route](/src/target/routes.go?s=1367:1414#L38)
+### <a name="Routes.Route">func</a> (Routes) [Route](/src/target/routes.go?s=1367:1414#L48)
 ``` go
 func (r Routes) Route(ctx *fasthttp.RequestCtx)
 ```
